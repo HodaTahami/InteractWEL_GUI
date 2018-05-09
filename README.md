@@ -60,7 +60,7 @@ http://wrestore.iupui.edu/
 
 ![InterACTWEL](img/pic1.jpg)
 
-# Project's Sketch
+# Interface Sketch
 ![Sketch1](img/sketch1.jpg)
 ![Sketch2](img/sketch2.jpg)
 ![sketch3](img/sketch3.jpg)
