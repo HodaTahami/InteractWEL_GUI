@@ -13,3 +13,8 @@ InterACTWEL is funded by the U.S. Department of Agriculture (USDA) National Inst
 
 
 ![InterACTWEL](img/pic1.jpg)
+
+# Project's Sketch
+![Sketch1](img/sketch1.jpg)
+![Sketch2](img/sketch2.jpg)
+![sketch3](img/sketch3.jpg)

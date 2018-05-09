@@ -1,14 +1,16 @@
   // 1. Create a map object.
     var mymap = L.map('map', {
-        center: [45.828129, -119.293427],
-        zoom: 6,
+        center: [45.614890, -118.789644],
+        zoom: 8,
         maxZoom: 17,
         minZoom: 3,
         detectRetina: true // detect whether the sceen is high resolution or not.
     });
 
     // 2. Add a base map.
-    L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png').addTo(mymap);
+  var Esri_WorldGrayCanvas = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 16
+  }).addTo(mymap);
 
     // 3.Add airports GeoJSON Data
     // Null variable that will hold airports data
@@ -38,7 +40,7 @@
             else { id = 1;}
             return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-plane marker-color-' + (id + 1).toString() })});
         },
-        attribution: 'InterACTWEL | Base Map &copy; CartoDB | Majid Farahani'
+        attribution: 'Base Map &copy; CartoDB | Majid Farahani & Hoda Tahami'
     });
     // Add the airports to the map.
 
@@ -50,7 +52,7 @@
 
 
     // 6. Set function for color ramp
-    colors = chroma.scale('blues').colors(13); //colors = chroma.scale('OrRd').colors(5);
+    colors = chroma.scale('set1').colors(13); //colors = chroma.scale('OrRd').colors(5);
 
     function setColor(density) {
         var id = 0;
@@ -81,49 +83,57 @@
         };
     }
 
-    // 8. Add state polygons
-    L.geoJson.ajax("assets/test.geojson", {
+    // 8. Add basin polygons
+    L.geoJson.ajax("assets/basin.geojson", {
         style: style
     }).addTo(mymap);
 
-/*
-    // 9. Create Leaflet Control Object for Legend
-    var legend = L.control({position: 'topright'});
 
-    // 10. Function that runs when legend is added to map
-    legend.onAdd = function () {
+  // 8. Add actors polygons
+  L.geoJson.ajax("assets/actors.geojson", {
+      style: style
+  }).addTo(mymap);
 
-        // Create Div Element and Populate it with HTML
-        var div = L.DomUtil.create('div', 'legend');
-        div.innerHTML += '<b># Airports in U.S States</b><br />';
-        div.innerHTML += '<i style="background: ' + colors[9] + '; opacity: 0.5"></i><p>45+</p>';
-        div.innerHTML += '<i style="background: ' + colors[8] + '; opacity: 0.5"></i><p>40-45</p>';
-        div.innerHTML += '<i style="background: ' + colors[7] + '; opacity: 0.5"></i><p>35-40</p>';
-        div.innerHTML += '<i style="background: ' + colors[6] + '; opacity: 0.5"></i><p>30-35</p>';
-        div.innerHTML += '<i style="background: ' + colors[5] + '; opacity: 0.5"></i><p>25-30</p>';
-        div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p>20-25</p>';
-        div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p>15-20</p>';
-        div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p>10-15</p>';
-        div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p> 5-10</p>';
-        div.innerHTML += '<i style="background: ' + colors[0] + '; opacity: 0.5"></i><p> 0- 5</p>';
-        div.innerHTML += '<hr><b>airport<b><br />';
-        div.innerHTML += '<i class="fa fa-plane marker-color-1"></i><p> With tower</p>';
-        div.innerHTML += '<i class="fa fa-plane marker-color-2"></i><p> Whithout tower</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-3"></i><p> RCC Minnesota</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-4"></i><p> Verizon</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-5"></i><p> US Cellular</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-6"></i><p> Hood River Cellular</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-7"></i><p> Medford Cellular</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-8"></i><p> Oregon RSA</p>';
-        // div.innerHTML += '<i class="fa fa-signal marker-color-9"></i><p> Salem Cellular</p>';
-        // Return the Legend div containing the HTML content
-        return div;
-    };
 
-    // 11. Add a legend to map
-    legend.addTo(mymap);
 
-*/
+  /*
+      // 9. Create Leaflet Control Object for Legend
+      var legend = L.control({position: 'topright'});
+
+      // 10. Function that runs when legend is added to map
+      legend.onAdd = function () {
+
+          // Create Div Element and Populate it with HTML
+          var div = L.DomUtil.create('div', 'legend');
+          div.innerHTML += '<b># Airports in U.S States</b><br />';
+          div.innerHTML += '<i style="background: ' + colors[9] + '; opacity: 0.5"></i><p>45+</p>';
+          div.innerHTML += '<i style="background: ' + colors[8] + '; opacity: 0.5"></i><p>40-45</p>';
+          div.innerHTML += '<i style="background: ' + colors[7] + '; opacity: 0.5"></i><p>35-40</p>';
+          div.innerHTML += '<i style="background: ' + colors[6] + '; opacity: 0.5"></i><p>30-35</p>';
+          div.innerHTML += '<i style="background: ' + colors[5] + '; opacity: 0.5"></i><p>25-30</p>';
+          div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p>20-25</p>';
+          div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p>15-20</p>';
+          div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p>10-15</p>';
+          div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p> 5-10</p>';
+          div.innerHTML += '<i style="background: ' + colors[0] + '; opacity: 0.5"></i><p> 0- 5</p>';
+          div.innerHTML += '<hr><b>airport<b><br />';
+          div.innerHTML += '<i class="fa fa-plane marker-color-1"></i><p> With tower</p>';
+          div.innerHTML += '<i class="fa fa-plane marker-color-2"></i><p> Whithout tower</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-3"></i><p> RCC Minnesota</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-4"></i><p> Verizon</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-5"></i><p> US Cellular</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-6"></i><p> Hood River Cellular</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-7"></i><p> Medford Cellular</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-8"></i><p> Oregon RSA</p>';
+          // div.innerHTML += '<i class="fa fa-signal marker-color-9"></i><p> Salem Cellular</p>';
+          // Return the Legend div containing the HTML content
+          return div;
+      };
+
+      // 11. Add a legend to map
+      legend.addTo(mymap);
+
+  */
 
 
 
