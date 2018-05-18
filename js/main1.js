@@ -40,7 +40,7 @@
 
   // 5. dynamically append style classes to this page using a JavaScript for loop. These style classes will be used for colorizing the markers.
   for (i = 0; i < 2; i++) {
-      $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ff3b2b;} </style>"));
+      $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #30ff2c;} </style>"));
   }
   var DataCenter = null;
   // Get GeoJSON and put on it on the map when it loads
@@ -108,7 +108,8 @@
   Energy.addTo(mymap);
 
   //////////////////////////////////////////////////////////////////////////////
-    // 3.2 Add airports GeoJSON Data
+  /*
+  // 3.2 Add airports GeoJSON Data
     // Null variable that will hold airports data
     var airports = null;
 
@@ -143,7 +144,7 @@
     airports.addTo(mymap);
 
 
-
+*/
 
 
 
