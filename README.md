@@ -84,7 +84,7 @@ First, we add all the requierd css libraries and script files.
 ```
 
 
-![Multimedia](img/colorpalette.PNG)
+![colorpalette](img/colorpalette.PNG)
 
 
 ```html
@@ -143,7 +143,7 @@ On font awesome icons the below icon is the icon we use for the data centers
 return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-database  marker-color-' + (id + 1).toString() })});
 ```
 
-![Multimedia](img/database.PNG)
+![Database](img/database.PNG)
 
 
 For food processors we use glyphicon
@@ -158,7 +158,7 @@ For enrgy sector we use an icon from font awesome
  return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-bolt marker-color-' + (id + 1).toString() })});
 ```
 
-![Multimedia](img/icon.PNG)
+![Icon](img/icon.PNG)
 
 
 ## Multimedia
