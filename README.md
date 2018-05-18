@@ -64,3 +64,111 @@ http://wrestore.iupui.edu/
 ![Sketch1](img/sketch1.jpg)
 ![Sketch2](img/sketch2.jpg)
 ![sketch3](img/sketch3.jpg)
+
+# Design Scheme
+
+## Color palette
+First, we add all the requierd css libraries and script files.
+
+```html
+ 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
+    <script type="text/javascript" src="https://cloudybay.github.io/leaflet.latlng-graticule/leaflet.latlng-graticule.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+```
+
+
+![Multimedia](img/colorpalette.PNG)
+
+
+```html
+    // 6. Set function for color ramp
+    colors = chroma.scale('set1').colors(13);
+    function setColor(density) {
+        var id = 0;
+        if (density == 13) { id = 12; }
+        else if (density == 12) { id = 11; }
+        else if (density == 11) { id = 10; }
+        else if (density == 10) { id = 9; }
+        else if (density == 9) { id = 8; }
+        else if (density == 8) { id = 7; }
+        else if (density == 7) { id = 6; }
+        else if (density == 6) { id = 5; }
+        else if (density == 5) { id = 4; }
+        else if (density == 4) { id = 3; }
+        else if (density == 3) { id = 2; }
+        else if (density == 2) { id = 1; }
+        else  { id = 0; }
+        return colors[id];
+    }
+    // 7. Set style function that sets fill color.md property equal to cell tower density
+    function style(feature) {
+        return {
+            fillColor: setColor(feature.properties.Subbasin),
+            fillOpacity: 0.4,
+            weight: 2,
+            opacity: 1,
+            color: '#b4b4b4',
+            dashArray: '4'
+        };
+    }
+```
+
+## Fonts 
+
+```html
+<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+```
+
+```html
+body {
+    height: 100%;
+    padding: 5px;
+    margin: 5px;
+    font-family: Titillium, sans-serif;
+}
+```
+
+## Icons
+for this project I need 3 different icons for point data
+On font awesome icons the below icon is the icon we use for the data centers
+
+```html
+return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-database  marker-color-' + (id + 1).toString() })});
+```
+
+![Multimedia](img/database.PNG)
+
+
+For food processors we use glyphicon
+
+```html
+return L.marker(latlng, {icon: L.divIcon({className: 'glyphicon glyphicon-grain marker-color-' + (id + 1).toString() })});
+```
+
+For enrgy sector we use an icon from font awesome
+
+```html
+ return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-bolt marker-color-' + (id + 1).toString() })});
+```
+
+![Multimedia](img/icon.PNG)
+
+
+## Multimedia
+
+```html
+ <script>
+                var  myDataPoint = L.marker([45.819842, -118.0]).addTo(mymap);
+                myDataPoint.bindPopup('<iframe src="//www.youtube.com/embed/OA2bVMIb9Po" width="560px" height="315px" ></iframe>', {
+                    maxWidth : 560});
+            </script>
+```
+
+![Multimedia](img/video1.PNG)
