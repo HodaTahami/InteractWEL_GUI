@@ -1,7 +1,7 @@
   // 1. Create a map object.
     var mymap = L.map('map', {
         center: [45.614890, -118.789644],
-        zoom: 8,
+        zoom: 9,
         maxZoom: 17,
         minZoom: 3,
         detectRetina: true // detect whether the sceen is high resolution or not.
@@ -12,7 +12,103 @@
       maxZoom: 16
   }).addTo(mymap);
 
-    // 3.Add airports GeoJSON Data
+////////////////////////////////////////////////////////////////////////////
+  // 3.1 Add wind turbine GeoJSON Data
+/*
+  var wt = null;
+  // Get GeoJSON and put on it on the map when it loads
+  wt = L.geoJson.ajax("assets/wt.geojson",{
+      onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.CNTL_TWR);
+      },
+      pointToLayer: function (feature, latlng) {
+          var id = 0;
+          if (feature.properties.CNTL_TWR == "Y") { id = 0; }
+
+          else { id = 1;}
+          return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-bolt marker-color-' + (id + 1).toString() })});
+      },
+      attribution: 'Base Map &copy; CartoDB | Majid Farahani & Hoda Tahami'
+
+  });
+  // Add wind turbine  to the map.
+  wt.addTo(mymap);*/
+////////////////////////////////////////////////////////////////////////////
+  // 3.2 Add DataCenter GeoJSON Data
+  // 4. build up a set of colors from colorbrewer's "set2" category
+  var colors = chroma.scale('RdGy').mode('lch').colors(2);
+
+  // 5. dynamically append style classes to this page using a JavaScript for loop. These style classes will be used for colorizing the markers.
+  for (i = 0; i < 2; i++) {
+      $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ff3b2b;} </style>"));
+  }
+  var DataCenter = null;
+  // Get GeoJSON and put on it on the map when it loads
+  DataCenter = L.geoJson.ajax("assets/DataCenter.geojson",{
+      onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.Id);
+      },
+      pointToLayer: function (feature, latlng) {
+          var id = 0;
+          if (feature.properties.Id == "0") { id = 0; }
+
+          else { id = 1;}
+          return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-database  marker-color-' + (id + 1).toString() })});
+      },
+
+
+  });
+  // Add DataCenter  to the map.
+  DataCenter.addTo(mymap);
+
+  ///////////////////////////////////////////////////////////////////////
+
+  // 3.3 Add FoodProcessor GeoJSON Data
+
+  var FoodProcessor = null;
+  // Get GeoJSON and put on it on the map when it loads
+  FoodProcessor = L.geoJson.ajax("assets/FoodProcessor.geojson",{
+      onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.CNTL_TWR);
+      },
+      pointToLayer: function (feature, latlng) {
+          var id = 0;
+          if (feature.properties.CNTL_TWR == "Y") { id = 0; }
+
+          else { id = 1;}
+          return L.marker(latlng, {icon: L.divIcon({className: 'glyphicon glyphicon-grain marker-color-' + (id + 1).toString() })});
+      },
+
+
+  });
+  // Add FoodProcessor  to the map.
+  FoodProcessor.addTo(mymap);
+
+  ///////////////////////////////////////////////////////////////////////
+
+  // 3.4 Add Energy GeoJSON Data
+
+  var Energy = null;
+  // Get GeoJSON and put on it on the map when it loads
+  Energy = L.geoJson.ajax("assets/Energy.geojson",{
+      onEachFeature: function (feature, layer) {
+          layer.bindPopup(feature.properties.CNTL_TWR);
+      },
+      pointToLayer: function (feature, latlng) {
+          var id = 0;
+          if (feature.properties.CNTL_TWR == "Y") { id = 0; }
+
+          else { id = 1;}
+          return L.marker(latlng, {icon: L.divIcon({className: 'fa fa-bolt marker-color-' + (id + 1).toString() })});
+      },
+      attribution: 'Base Map &copy; CartoDB | Majid Farahani & Hoda Tahami'
+
+  });
+  // Add Energy  to the map.
+  Energy.addTo(mymap);
+
+  //////////////////////////////////////////////////////////////////////////////
+    // 3.2 Add airports GeoJSON Data
     // Null variable that will hold airports data
     var airports = null;
 
@@ -52,7 +148,7 @@
 
 
     // 6. Set function for color ramp
-    colors = chroma.scale('set1').colors(13); //colors = chroma.scale('OrRd').colors(5);
+    colors = chroma.scale('set1').colors(13);
 
     function setColor(density) {
         var id = 0;
@@ -89,57 +185,6 @@
     }).addTo(mymap);
 
 
-  // 8. Add actors polygons
-  L.geoJson.ajax("assets/actors.geojson", {
-      style: style
-  }).addTo(mymap);
-
-
-
-  /*
-      // 9. Create Leaflet Control Object for Legend
-      var legend = L.control({position: 'topright'});
-
-      // 10. Function that runs when legend is added to map
-      legend.onAdd = function () {
-
-          // Create Div Element and Populate it with HTML
-          var div = L.DomUtil.create('div', 'legend');
-          div.innerHTML += '<b># Airports in U.S States</b><br />';
-          div.innerHTML += '<i style="background: ' + colors[9] + '; opacity: 0.5"></i><p>45+</p>';
-          div.innerHTML += '<i style="background: ' + colors[8] + '; opacity: 0.5"></i><p>40-45</p>';
-          div.innerHTML += '<i style="background: ' + colors[7] + '; opacity: 0.5"></i><p>35-40</p>';
-          div.innerHTML += '<i style="background: ' + colors[6] + '; opacity: 0.5"></i><p>30-35</p>';
-          div.innerHTML += '<i style="background: ' + colors[5] + '; opacity: 0.5"></i><p>25-30</p>';
-          div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p>20-25</p>';
-          div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p>15-20</p>';
-          div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p>10-15</p>';
-          div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p> 5-10</p>';
-          div.innerHTML += '<i style="background: ' + colors[0] + '; opacity: 0.5"></i><p> 0- 5</p>';
-          div.innerHTML += '<hr><b>airport<b><br />';
-          div.innerHTML += '<i class="fa fa-plane marker-color-1"></i><p> With tower</p>';
-          div.innerHTML += '<i class="fa fa-plane marker-color-2"></i><p> Whithout tower</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-3"></i><p> RCC Minnesota</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-4"></i><p> Verizon</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-5"></i><p> US Cellular</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-6"></i><p> Hood River Cellular</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-7"></i><p> Medford Cellular</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-8"></i><p> Oregon RSA</p>';
-          // div.innerHTML += '<i class="fa fa-signal marker-color-9"></i><p> Salem Cellular</p>';
-          // Return the Legend div containing the HTML content
-          return div;
-      };
-
-      // 11. Add a legend to map
-      legend.addTo(mymap);
-
-  */
-
-
-
-
-
-
     // 12. Add a scale bar to map
     L.control.scale({position: 'bottomleft'}).addTo(mymap);
 
@@ -158,14 +203,6 @@
 
 
 
-    // 14. This is core of how Labelgun works. We must provide two functions, one
-    // that hides our labels, another that shows the labels. These are essentially
-    // callbacks that labelgun uses to actually show and hide our labels
-    // In this instance we set the labels opacity to 0 and 1 respectively.
-    var hideLabel = function(label){ label.labelObject.style.opacity = 0;};
-    var showLabel = function(label){ label.labelObject.style.opacity = 1;};
-    var labelEngine = new labelgun.default(hideLabel, showLabel);
-    var labels = [];
 
 
 
@@ -176,82 +213,17 @@
 
 
 
-    // 15. Create a label for each state.
-    var usstates = null;
-    usstates = L.geoJson.ajax("assets/test.geojson", {
-        style: style,
-        onEachFeature: function (feature, label) {
-            label.bindTooltip(feature.properties.name, {className: 'feature-label', permanent:true, direction: 'center'});
-            labels.push(label);
-        }
-    }).addTo(mymap);
 
 
 
 
 
 
-    /*
-    //16.  create an addLabel function to dynamically update the visible labels, aiming to avoid the lable overlap.
-    function addLabel(layer, id) {
-        // This is ugly but there is no getContainer method on the tooltip :(
-        var label = layer.getTooltip()._source._tooltip._container;
-        if (label) {
-            // We need the bounding rectangle of the label itself
-            var rect = label.getBoundingClientRect();
-
-            // We convert the container coordinates (screen space) to Lat/lng
-            var bottomLeft = mymap.containerPointToLatLng([rect.left, rect.bottom]);
-            var topRight = mymap.containerPointToLatLng([rect.right, rect.top]);
-            var boundingBox = {
-                bottomLeft : [bottomLeft.lng, bottomLeft.lat],
-                topRight   : [topRight.lng, topRight.lat]
-            };
-
-            // Ingest the label into labelgun itself
-            labelEngine.ingestLabel(
-                boundingBox,
-                id,
-                parseInt(Math.random() * (5 - 1) + 1), // Weight
-                label,
-                label.innerText,
-                false
-            );
-
-            // If the label hasn't been added to the map already
-            // add it and set the added flag to true
-            if (!layer.added) {
-                layer.addTo(mymap);
-                layer.added = true;
-            }
-        }
-
-    }
-
-*/
 
 
 
 
 
-    /*
-    //17. We will update the visualization of the labels whenever you zoom the map.
 
-    mymap.on("zoomend", function(){
-        var i = 0;
-        usstates.eachLayer(function(label){
-            addLabel(label, ++i);
-        });
-        labelEngine.update();
-    });
 
-*/
 
-    /*
-    // 18. define the coordinate reference system (CRS)
-    mycrs = new L.Proj.CRS('EPSG:2991',
-        '+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=400000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
-        {
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1] // example zoom level resolutions
-        }
-    );*/
